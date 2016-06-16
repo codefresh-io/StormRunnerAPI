@@ -7,9 +7,7 @@ var  StormAPI = function (user, password, tenant) {
      this.ctx.password = password;
      this.ctx.tenant = tenant | 293752468;
 
-
-     debugger;
-  }
+}
 
 StormAPI.prototype.login = function(){
   debug('API->login')
@@ -33,21 +31,24 @@ StormAPI.prototype.login = function(){
         reject(err);
 
       self.ctx.token = res.body.token;
-      return resolve(res.body.token);
+      return resolve();
 
   });
 })
 return p;
 }
 
-StormAPI.prototype.runTest = function(){
+StormAPI.prototype.runTest = function(testId){
   debug('API->runTest');
   var ctx = this.ctx;
-  debug(`ctx= ${JSON.stringify(ctx)}`);
+  testId = testId || 2;
 
   var p = new Promise((resolve, reject)=>{
 
-    var url = 'https://stormrunner-load.saas.hpe.com/v1/projects/1/tests/2/run?TENANTID=293752468'
+    var url = `https://stormrunner-load.saas.hpe.com/v1/projects/1/tests/${testId}/run?TENANTID=293752468`
+    debug(`URL=${url}`);
+    debug('--------------------');
+
     request
     .post(url)
     .set('Cookie', `LWSSO_COOKIE_KEY=${ctx.token}`)
@@ -105,14 +106,18 @@ StormAPI.prototype.getStatus = function(retry){
 
           console.log(`STATUS is = ${JSON.stringify(res.body.status)}`);
 
-        return resolve(0);
+        return reject(ctx.run.status);
 
       });
     });
 
 
 
- return p.then(self.getStatus.bind(self));
+ return p.then(self.getStatus.bind(self), (status)=>{
+   console.log('get status compled with status : '  + status);
+   return;
+
+ });
 
 }
 

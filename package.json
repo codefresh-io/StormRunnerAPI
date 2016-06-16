@@ -1,9 +1,13 @@
 {
   "name": "runStormTest",
-  "version": "0.0.0",
-  "private": true,
+  "version": "0.0.1",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/codefresh-io/StormRunnerAPI.git"
+  },
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./node_modules/mocha/bin/_mocha ./test/e2e.spec.js --timeout 20000000"
   },
   "dependencies": {
     "body-parser": "~1.13.2",
@@ -11,6 +15,7 @@
     "debug": "~2.2.0",
     "express": "~4.13.1",
     "jade": "~1.11.0",
+    "mocha": "^2.5.3",
     "morgan": "~1.6.1",
     "serve-favicon": "~2.3.0"
   }
