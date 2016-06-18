@@ -1,4 +1,4 @@
-var  Q       =  require('Q');
+var  Q       =  require('q');
 var  request = require('superagent');
 var  debug   = require('debug')('StormAPI');
 var  StormAPI = function (user, password, tenant) {
