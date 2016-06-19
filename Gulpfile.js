@@ -11,9 +11,8 @@ gulp.task('storm', function (done) {
     var ctx = {};
     var api = new StormAPI(user.name, user.password);
 
-     api.login().then(api.runTest.bind(api, 10), done).then(api.getStatus.bind(api, -1)).then(()=>{
+     api.login().then(api.runTest.bind(api, process.env.testId || 10), done).then(api.getStatus.bind(api, -1)).then(()=>{
          console.log('completed')
          done();
-
-       }, done);
+      }, done);
 });
